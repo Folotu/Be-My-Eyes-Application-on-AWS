@@ -1,0 +1,85 @@
+version: 0.2
+
+env:
+  variables:
+    BUILD_USERMANAGEMENT: "true"
+    BUILD_TRANSCRIPTION: "true"
+    BUILD_DOCUMANAGEMENT: "true"
+    BUILD_FRONTEND: "true"
+    
+phases:
+  install:
+    commands:
+      - echo "Building all services."
+
+  pre_build:
+    commands:
+      - echo Logging in to Amazon ECR...
+      - echo "$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)" | docker login --username AWS --password-stdin $REPOSITORY_URI
+      - echo "Substituting placeholder with Account ID..."
+      - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" usermanagement/appspec.yml
+      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" orders/appspec.yml
+      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" seller/appspec.yml
+      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" activity/appspec.yml
+      
+
+  build:
+    commands:
+      # Build and push UserManagement service
+      - |
+        cd usermanagement 
+        echo Building UserManagement service...
+        docker build -t usermanagement .
+        docker tag usermanagement:latest $REPOSITORY_URI/usermanagement-containerrepo:latest
+        docker push $REPOSITORY_URI/usermanagement-containerrepo:latest
+        cd ..
+      # Build and push Orders service
+      - |
+        cd orders 
+        echo Building Orders service...
+        docker build -t orders .
+        docker tag orders:latest $REPOSITORY_URI/orderscontainerrepo:latest
+        docker push $REPOSITORY_URI/orderscontainerrepo:latest
+        cd ..
+      # Build and push Seller service
+      - |
+        cd seller 
+        echo Building Seller service...
+        docker build -t seller .
+        docker tag seller:latest $REPOSITORY_URI/sellercontainerrepo:latest
+        docker push $REPOSITORY_URI/sellercontainerrepo:latest
+        cd ..
+      # Build and push Activity service
+      - |
+        cd activity 
+        echo Building Activity service...
+        docker build -t activity .
+        docker tag activity:latest $REPOSITORY_URI/activitycontainerrepo:latest
+        docker push $REPOSITORY_URI/activitycontainerrepo:latest
+        cd ..
+
+artifacts:
+  files: '**/*'
+
+  secondary-artifacts:
+    UserManagementBuildOutput:
+      files:
+        - usermanagement/Dockerfile
+        - usermanagement/appspec.yml
+      discard-paths: yes
+    OrdersBuildOutput:
+      files:
+        - orders/Dockerfile
+        - orders/appspec.yml
+      discard-paths: yes
+    SellerBuildOutput:
+      files:
+        - seller/Dockerfile
+        - seller/appspec.yml
+      discard-paths: yes
+    ActivityBuildOutput:
+      files:
+        - activity/Dockerfile
+        - activity/appspec.yml
+      discard-paths: yes
