@@ -49,7 +49,7 @@ def landing():
     redirectURL = request.host_url[:-1]+url_for('callback')
 
     if ('cloudfront' in redirectURL):
-        redirectURL.replace("http://", "https://")
+        redirectURL = redirectURL.replace("http://", "https://")
 
     hostedUIURL = f'{CognitoDomain}/login?response_type=code&client_id={CognitoClientID}&redirect_uri={redirectURL}'
 

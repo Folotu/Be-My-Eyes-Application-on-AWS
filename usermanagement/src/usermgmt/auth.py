@@ -110,7 +110,7 @@ def get_cognito_public_keys():
 def exchange_code_for_token(code):
     redirectURL = request.host_url[:-1]
     if ('cloudfront' in redirectURL):
-        redirectURL.replace("http://", "https://")
+        redirectURL = redirectURL.replace("http://", "https://")
 
     CognitoDomain = secretFromSM['COGNITO_DOMAIN']
     CognitoClientID = secretFromSM['COGNITO_CLIENT_ID']
