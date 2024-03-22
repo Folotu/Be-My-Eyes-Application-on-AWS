@@ -15,7 +15,7 @@ CORS(app)
 # def dashboard(username):
 #     return render_template('dashboard.html', username=username)
 
-@app.route('/index.html')
+@app.route('/index/index.html')
 def dashboard():
     return redirect(request.host_url + 'index/index.html')
 
@@ -34,7 +34,11 @@ def callback():
         session['userId'] = user_id
         session['sessionId'] = create_user_session(user_id, additional_info)
 
-        dashboard_url = url_for('dashboard') #+ "?sessionId=" + session['sessionId']
+        #dashboard_url = url_for('dashboard') + "?sessionId=" + session['sessionId'] + "?userid="+user_id 
+        # redirectURL = request.host_url[:-1]
+        # if ('cloudfront' in redirectURL):
+        #     redirectURL = redirectURL.replace("http://", "https://")
+        dashboard_url = url_for('dashboard') + "?sessionId=" + session['sessionId'] + "&userid="+user_id 
         return redirect(dashboard_url)
     else:
         # Handle error or redirect to login page
