@@ -17,7 +17,7 @@ CORS(app)
 
 @app.route('/index.html')
 def dashboard():
-    return redirect(request.host_url + '/index.html')
+    return redirect(request.host_url + 'index/index.html')
 
 @app.route('/usermanagement/callback')
 def callback():
