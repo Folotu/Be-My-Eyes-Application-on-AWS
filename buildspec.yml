@@ -17,11 +17,11 @@ phases:
       - echo Logging in to Amazon ECR...
       - echo "$(aws ecr get-login-password --region $AWS_DEFAULT_REGION)" | docker login --username AWS --password-stdin $REPOSITORY_URI
       - echo "Substituting placeholder with Account ID..."
-      - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" usermanagement/appspec.yml
-      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" orders/appspec.yml
-      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" seller/appspec.yml
-      - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" activity/appspec.yml
+      # - ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      # - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" usermanagement/appspec.yml
+      # - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" transcription/appspec.yml
+      # - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" documentmanagement/appspec.yml
+      # - sed -i "s|AWS_ACCOUNT_ID|$ACCOUNT_ID|g" frontend/appspec.yml
       
 
   build:
@@ -34,52 +34,50 @@ phases:
         docker tag usermanagement:latest $REPOSITORY_URI/usermanagement-containerrepo:latest
         docker push $REPOSITORY_URI/usermanagement-containerrepo:latest
         cd ..
-      # Build and push Orders service
+      # Build and push description service
       - |
-        cd orders 
-        echo Building Orders service...
-        docker build -t orders .
-        docker tag orders:latest $REPOSITORY_URI/orderscontainerrepo:latest
-        docker push $REPOSITORY_URI/orderscontainerrepo:latest
+        cd description 
+        echo Building description service...
+        docker build -t description .
+        docker tag description:latest $REPOSITORY_URI/descriptioncontainerrepo:latest
+        docker push $REPOSITORY_URI/descriptioncontainerrepo:latest
         cd ..
-      # Build and push Seller service
-      - |
-        cd seller 
-        echo Building Seller service...
-        docker build -t seller .
-        docker tag seller:latest $REPOSITORY_URI/sellercontainerrepo:latest
-        docker push $REPOSITORY_URI/sellercontainerrepo:latest
-        cd ..
-      # Build and push Activity service
-      - |
-        cd activity 
-        echo Building Activity service...
-        docker build -t activity .
-        docker tag activity:latest $REPOSITORY_URI/activitycontainerrepo:latest
-        docker push $REPOSITORY_URI/activitycontainerrepo:latest
-        cd ..
+      # # Build and push DocumentManagement service
+      # - |
+      #   cd documentmanagement 
+      #   echo Building DocumentManagement service...
+      #   docker build -t documentmanagement .
+      #   docker tag documentmanagement:latest $REPOSITORY_URI/documentmanagementappcontainerrepo:latest
+      #   docker push $REPOSITORY_URI/documentmanagementappcontainerrepo:latest
+      #   cd ..
+      # # Build and push Frontend service
+      # - |
+      #   cd frontend 
+      #   echo Building Frontend service...
+      #   docker build -t frontend .
+      #   docker tag frontend:latest $REPOSITORY_URI/frontendappcontainerrepo:latest
+      #   docker push $REPOSITORY_URI/frontendappcontainerrepo:latest
+      #   cd ..
 
-artifacts:
-  files: '**/*'
-
-  secondary-artifacts:
-    UserManagementBuildOutput:
-      files:
-        - usermanagement/Dockerfile
-        - usermanagement/appspec.yml
-      discard-paths: yes
-    OrdersBuildOutput:
-      files:
-        - orders/Dockerfile
-        - orders/appspec.yml
-      discard-paths: yes
-    SellerBuildOutput:
-      files:
-        - seller/Dockerfile
-        - seller/appspec.yml
-      discard-paths: yes
-    ActivityBuildOutput:
-      files:
-        - activity/Dockerfile
-        - activity/appspec.yml
-      discard-paths: yes
+# artifacts:
+#   secondary-artifacts:
+#     UserManagementBuildOutput:
+#       files:
+#         - usermanagement/Dockerfile
+#         - usermanagement/appspec.yml
+#       discard-paths: yes
+#     TranscriptionBuildOutput:
+#       files:
+#         - transcription/Dockerfile
+#         - transcription/appspec.yml
+#       discard-paths: yes
+#     DocumentManagementBuildOutput:
+#       files:
+#         - documentmanagement/Dockerfile
+#         - documentmanagement/appspec.yml
+#       discard-paths: yes
+#     FrontendBuildOutput:
+#       files:
+#         - frontend/Dockerfile
+#         - frontend/appspec.yml
+#       discard-paths: yes
