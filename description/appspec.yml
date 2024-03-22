@@ -1,0 +1,9 @@
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:us-west-2:AWS_ACCOUNT_ID:task-definition/user-management-task"
+        LoadBalancerInfo:
+          ContainerName: "user-management-container"
+          ContainerPort: 80

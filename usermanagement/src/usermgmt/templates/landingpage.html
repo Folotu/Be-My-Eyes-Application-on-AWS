@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Landing Page | AnyOrg</title>
+   <!-- CSS Link -->
+   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/stenotechstyle.css') }}">
+
+   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename ='images/Logo2.png') }}">
+  
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <img src="{{ url_for('static', filename ='images/Logo2.png') }}" alt="AnyOrg" class="logo">
+        </div>
+    </header>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="container">
+        <div class="login-box">
+        
+            <div class="login-info">
+               
+                <h2>Blank </h2>
+                <br>
+                <h3>Blank</h3>
+                
+                <!-- <h4>Type less, dictate more</h4> -->
+            </div>
+            
+            <div class="login-form">
+                <h3>Log in to access your account</h3>
+                    <br>
+
+                    <button id="loginButton" type="button" data-HostedUI-url="{{ hostedUIURL }}">
+                        Login <img src="{{ url_for('static', filename='images/arrow.png') }}">
+                    </button>                    
+                
+            </div>
+        
+        </div>
+
+        
+    </div>
+  
+    <div class="footer">
+        <p>&copy; Copyright AnyOrg 2023</p>
+    </div>
+</body>
+
+<script src="{{ url_for('static', filename='js/landingpageJS.js') }}"></script>
+
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logged out | AnyOrg</title>
+   <!-- CSS Link -->
+   <link rel="stylesheet" href="#">
+
+   <!-- Website Logo -->
+   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename = 'images/Logo2.png') }}">
+  
+
+   <style>
+    body{
+        margin: 0;
+        padding: 0;
+        background: #f7edcd; 
+    }
+    .logo{
+        width: 150px;
+        cursor: pointer;
+        margin: 10px 0;
+        align-items: center;
+    }
+
+    .logout{
+        justify-content: center;
+        align-items: center;
+        height: 70vh;
+    }
+    .content{
+        justify-content: center;
+        align-items: center;
+        
+    }
+    .content h1{
+    font-size: 35px;
+    margin-top: 0;
+    font-family: fantasy;
+    }
+        
+        .content button{
+        width: 140px;
+        border: 0;
+        padding: 12px 10px;
+        outline: none;
+        color: #fff;
+        background: linear-gradient(to right, #5792eb, #0644ca);
+        border-radius: 6px;
+        cursor: pointer;
+    
+    }
+
+   </style>
+
+
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <center>
+                <a href="{{ url_for('landing') }}"><img src="{{ url_for('static', filename = 'images/Logo2.png') }}" alt="AnyOrg" class="logo"></a>
+            </center>
+            
+           <hr style="height:5px;border-width:0;color:gray;background-color:rgb(42, 34, 155)">
+        </div>
+    </header>
+   
+
+    <div class="logout">
+        <div class="row">
+            <div class="content">
+            <center>
+                <br><br>
+                <br><br>
+                <br><br>
+                <h1> You successfully logged out</h1>
+                <br>
+                <h3> Thank you for using <strong>ANYORG</strong></h3><br>
+                <!-- <button>Sign in Again</button>  -->
+                <a href="{{ url_for('landing') }}" style="text-decoration: none;">
+                          
+                    Return to Sign in</a>
+            
+            </center>
+        </div>
+        
+        </div>
+        
+            
+    </div>
+
+   
+  
+    <div class="footer">
+        <center>
+            <p>&copy; Copyright AnyOrg 2023</p>
+        </center>
+        
+    </div>
+
+</body>
+</html>

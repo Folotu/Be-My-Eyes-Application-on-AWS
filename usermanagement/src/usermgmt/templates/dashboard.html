@@ -1,0 +1,97 @@
+{% extends "base.html" %} 
+
+{% block title %}Dashboard | AnyOrg{% endblock %}
+{% block username %} {{ username }} {% endblock %} 
+{% block body %}
+    <main>
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Dashboard</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <div class="row">
+
+                <div class="col-md-3">
+                        
+                    <div class="card text-center h-100" id="dashcard">
+                        <div class="card-body bg-primary text-dark" style="background-image: linear-gradient(to right, white, lightgray);">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <i class="fa fa-microphone-lines fa-4x"></i>
+                                </div>
+                                <div class="col">
+                                    
+                                    <h3 class="display-7" style="color: indigo"><b>New Transcript</b></h3>
+                                    <h6>01</h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a class="btn btn-outline-info" href="{{ url_for('transcribe') }}" onclick="navigateWithSession(event, this.href)">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                        
+                    <div class="card text-center h-100" id="dashcard">
+                        <div class="card-body bg-primary text-dark" style="background-image: linear-gradient(to right, white, lightgray);">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <i class="fa fa-file-text fa-4x"></i>
+                                </div>
+                                <div class="col">
+                                    
+                                    <h3 class="display-7" style="color: indigo"><b>Transcript Reports</b></h3>
+                                    <h6>02</h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a class="btn btn-outline-info" href="{{ url_for('report') }}">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                        
+                    <div class="card text-center h-100" id="dashcard">
+                        <div class="card-body bg-primary text-dark" style="background-image: linear-gradient(to right, white, lightgray);">
+                            <div class="row align-items-center">
+                                <div class="col">
+                                    <i class="fa fa-file-audio fa-4x"></i>
+                                </div>
+                                <div class="col">
+                                    
+                                    <h3 class="display-7" style="color: indigo"><b>Audio Files</b></h3>
+                                    <h6>03</h6>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <a class="btn btn-outline-info" href="{{ url_for('audiofile') }}">View Details</a>
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+            <br>  
+        </div>
+    </main>
+
+    <script>
+        var landingPageUrl = "{{ url_for('landing') }}";
+    </script>
+    <script
+    type="text/javascript"
+    src="{{ url_for('static', filename='/js/dashboard.js') }}">
+    </script>
+
+{% endblock %}
